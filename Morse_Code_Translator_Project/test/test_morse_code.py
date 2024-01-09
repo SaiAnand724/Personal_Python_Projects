@@ -35,11 +35,22 @@ To execute the tests containing a string in its name we can use the following sy
 # Have morse_code.py declared as a class object
 import morse_code as mc
 
-def test_interpreter():
+def test_interpreter_1():
     #assert encode_morse_code("hello/world") == ".... . .-.. .-.. ---/.-- --- .-. .-.. -.."
     #assert decode_morse_code(".... . .-.. .-.. ---/.-- --- .-. .-.. -..") == "HELLO WORLD"
-    arg_array = [None, 1, ".-"]
+    arg_array = ["", '1', ".-"]
     #assert morse_code_interpreter(arg_array) == "A"
+    print("Output: ", mc.morse_code_interpreter(arg_array))
     assert mc.morse_code_interpreter(arg_array) == "A"
+    #assert None != "A"
+    
+
+def test_interpreter_2():
+    #assert encode_morse_code("hello/world") == ".... . .-.. .-.. ---/.-- --- .-. .-.. -.."
+    #assert decode_morse_code(".... . .-.. .-.. ---/.-- --- .-. .-.. -..") == "HELLO WORLD"
+    arg_array = ["", '2', "hello"]
+    #assert morse_code_interpreter(arg_array) == ".... . .-.. .-.. ---"
+    assert mc.morse_code_interpreter(arg_array) == "X X X X Y"
+
     
     
