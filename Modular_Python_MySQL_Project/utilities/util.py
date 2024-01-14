@@ -219,6 +219,7 @@ class Utilities:
     
    
 """
+# Testing variables
 database_name = "django_db"
 
 table_name = "Table_1"
@@ -242,7 +243,6 @@ ord_direction = ord_dir_arr[2]
 
 
 # Testing functions
-
 query_formula_1 = Utilities.mysql_create_db(database_name) 
 # query_formula_1 = Utilities.mysql_drop_db(database_name) 
 print(query_formula_1)
@@ -271,4 +271,3 @@ print(query_formula_6)
 query_formula_7 = Utilities.mysql_show_db()
 query_formula_7 = Utilities.mysql_show_tb()
 """
-# Testing variables
