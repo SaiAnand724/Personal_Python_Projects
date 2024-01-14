@@ -47,7 +47,7 @@ mydb = mysql.connector.connect(
 
 # Create SQL database in python
 # Initialize cursor
-"""columns_to_str
+"""
 Doc Source: https://www.psycopg.org/docs/cursor.html
 Cursors are created by the connection. cursor() method: 
     they are bound to the connection for the entire lifetime and all the commands 
