@@ -457,7 +457,7 @@ Doc Source: https://www.psycopg.org/docs/connection.html#connection.commit
 Sends inserted data to database using .commit()
 Commit any pending transaction to the database.
 
-Note: Ideally this would be the last line in code after modifying data
+Note: Ideally this would be the next to last line in code after modifying data
 """
 mydb.commit()
 
