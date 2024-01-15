@@ -9,53 +9,15 @@ pip3 install mysql-connector-python-rf
 # Import mysql-connector module 
 import mysql.connector
 
-# Import json module for storing and fetching information
-import json
-
-# Connecting to/Setting up database
+# SQL Query Code Log
 """
-Basic Doc Source: https://www.psycopg.org/docs/module.html#psycopg2.connect
-MySQL Doc Source: https://dev.mysql.com/doc/connector-python/en/connector-python-connectargs.html
-Create a new database session and return a new connection object.
+1. mycursor.execute("CREATE DATABASE temp_db")
+2. mycursor.execute("SHOW DATABASES")
+3. meh
 
-The basic connection parameters are:
-
-dbname – the database name (database is a deprecated alias)
-
-user – user name used to authenticate
-
-password – password used to authenticate
-
-host – database host address (defaults to UNIX socket if not provided)
-
-port – connection port number (defaults to 5432 if not provided)
+n. db.commit()
+n + 1. mycursor.close()
 """
-
-mydb = mysql.connector.connect(
-    host = "localhost",
-    # Username for connection - default (root)
-    user = "root", 
-    # Password for connection - User generated password
-    password = "User-Password",
-    # Create a database first, then fill field with info
-    # Field to determine which database to start/work with
-    database = "Any_Database"
-)
-
-# print(mydb) - Lets you know the connection works
-# Output should look like: <mysql.connector.connection.MySQLConnection object at 0x00000**********0>
-
-# Create SQL database in python
-# Initialize cursor
-"""
-Doc Source: https://www.psycopg.org/docs/cursor.html
-Cursors are created by the connection. cursor() method: 
-    they are bound to the connection for the entire lifetime and all the commands 
-    are executed in the context of the database session wrapped by the connection.
-
-"""
-# Create cursor object using the mydb connection
-mycursor = mydb.cursor()
 
 # Formatting columns into a string
 def columns_to_str(column_names):
@@ -86,6 +48,11 @@ class Utilities:
         show_db_form = "SHOW DATABASES"
         return show_db_form
     
+    # Use database command for MySQL
+    def mysql_use_db(database_name):
+        use_db_form = "USE " + database_name
+        return use_db_form
+    
     # Create database command for MySQL
     def mysql_create_db(database_name):
         create_db_form = "CREATE DATABASE IF NOT EXISTS " + database_name
@@ -94,7 +61,7 @@ class Utilities:
     
     # Drop database command for MySQL
     def mysql_drop_db(database_name):
-        drop_db_form = "DROP IF EXISTS " + database_name
+        drop_db_form = "DROP DATABASE IF EXISTS "+ database_name
         # mycursor.execute(drop_db_form)
         return drop_db_form
     
@@ -119,7 +86,7 @@ class Utilities:
         # mycursor.execute(drop_tb_form)
         return drop_tb_form
     
-    # Adding an element to a table command for MySQL
+    # Adding an element to a table for MySQL
     def mysql_addto_tb(table_name, values_array):
         values_array_str = ""
         count = 0
@@ -139,19 +106,29 @@ class Utilities:
                 
             count += 1
         
-        insert_tb_form = "INSERT INTO " + table_name + " VALUES (" + values_array_str + ")"
+        insrt_tb_form = "INSERT INTO " + table_name + " VALUES (" + values_array_str + ")"
         # mycursor.excecute(insert_tb_form)
         # mycursor.executemany(insert_tb_form, values_dict)
-        return insert_tb_form
+        return insrt_tb_form
+    
+    # Adding many elements to a table for MySQL
+    def mysql_addmny_tb(table_name, values_array):
+        placehldr_arr = ["%s"] * (len(values_array) - 1)
+        print("Placeholder array: ", placehldr_arr)
+        values_list = [[i] for i in values_array]
+        print(str(values_list))
+        insrt_mnytb_form = "INSERT INTO " + table_name + " VALUES (" + placehldr_arr + ")"
+        return insrt_mnytb_form, str(values_list)
     
     # Removing a specific element from a table for MySQL
     def mysql_rmfrm_tb(table_name, column_name, value):
         print(type(value))
         if type(value) != str:
-            del_frmtb_form = "DELETE FROM " + table_name + " WHERE " + column_name + " = " + str(value)
+            str_value = str(value)
         else:
             str_value = "'" + value + "'"
-            del_frmtb_form = "DELETE FROM " + table_name + " WHERE " + column_name + " = " + str_value
+            
+        del_frmtb_form = "DELETE FROM " + table_name + " WHERE " + column_name + " = " + str_value
         # mycursor.execute(del_form_temp) # - remove comment when running initially
         return del_frmtb_form
     
@@ -219,7 +196,6 @@ class Utilities:
     
    
 """
-# Testing variables
 database_name = "django_db"
 
 table_name = "Table_1"
@@ -243,6 +219,7 @@ ord_direction = ord_dir_arr[2]
 
 
 # Testing functions
+
 query_formula_1 = Utilities.mysql_create_db(database_name) 
 # query_formula_1 = Utilities.mysql_drop_db(database_name) 
 print(query_formula_1)
@@ -271,3 +248,4 @@ print(query_formula_6)
 query_formula_7 = Utilities.mysql_show_db()
 query_formula_7 = Utilities.mysql_show_tb()
 """
+# Testing variables
